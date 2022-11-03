@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("/drinks")
-class DrinkController(private val calculatorService: CalculatorService) {
+class DrinkController {
     @PostMapping("/drink")
     fun insertDrink(@RequestBody drink: Drink): ResponseEntity<List<Drink>> {
         CalculatorService.drinks.add(drink)
@@ -28,7 +28,7 @@ class DrinkController(private val calculatorService: CalculatorService) {
             val index = drinks.indexOf(drink)
             drinks.remove(drink)
             val newDrink = drink.copy(name = newName)
-            drinks.add(index,newDrink)
+            drinks.add(index, newDrink)
             return ResponseEntity(newDrink, HttpStatus.OK)
         }
     }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/celebrations")
-class PartyController(private val calculatorService: CalculatorService) {
+class CelebrationController(private val calculatorService: CalculatorService) {
 
     @GetMapping("/celebration/calculate")
     fun getCalculationForCelebration(amountMen: Int, amountWomen: Int): ResponseEntity<List<DrinkAmount>> {
