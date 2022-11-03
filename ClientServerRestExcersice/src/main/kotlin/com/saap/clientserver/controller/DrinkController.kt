@@ -17,18 +17,20 @@ import org.springframework.web.server.ResponseStatusException
 class DrinkController {
     @PostMapping("/drink")
     fun insertDrink(@RequestBody drink: Drink): ResponseEntity<List<Drink>> {
-        CalculatorService.drinks.add(drink)
-        return ResponseEntity(CalculatorService.drinks, HttpStatus.OK)
+        CalculatorService.drinks.apply {
+            this.add(drink)
+            return ResponseEntity(this, HttpStatus.OK)
+        }
     }
 
     @PutMapping("/drink/byName")
     fun updateDrinkName(oldName: String, newName: String): ResponseEntity<Drink> {
-        CalculatorService.drinks.let { drinks ->
-            val drink = drinks.find { it.name.equals(oldName, true) } ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST)
-            val index = drinks.indexOf(drink)
-            drinks.remove(drink)
+        CalculatorService.drinks.apply {
+            val drink = this.find { it.name.equals(oldName, true) } ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST)
+            val index = this.indexOf(drink)
+            this.remove(drink)
             val newDrink = drink.copy(name = newName)
-            drinks.add(index, newDrink)
+            this.add(index, newDrink)
             return ResponseEntity(newDrink, HttpStatus.OK)
         }
     }
